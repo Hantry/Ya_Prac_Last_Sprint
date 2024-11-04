@@ -1,0 +1,11 @@
+upstream web_servers {
+	server 10.130.10.18:80;
+	server 10.130.10.35:80;
+}
+          
+server {
+	listen 3000;
+	location / {
+		proxy_pass http://web_servers;
+	}
+}

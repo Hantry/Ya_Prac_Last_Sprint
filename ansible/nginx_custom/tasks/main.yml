@@ -1,0 +1,22 @@
+---
+# tasks file for nginx_custom
+
+- name: Установка Nginx 
+  apt:
+    name: "nginx"
+    state: present
+  when: inventory_hostname != 'proxy'
+
+- name: Подмена веб-страницы
+  ansible.builtin.template:
+    src: index1.j2
+    dest: /var/www/html/index.nginx-debian.html
+  when: "'output_1' in inventory_hostname"
+  notify: "Nginx Reloader"
+
+- name: Подмена веб-страницы
+  ansible.builtin.template:
+    src: index2.j2
+    dest: /var/www/html/index.nginx-debian.html
+  when: "'output_2' in inventory_hostname"
+  notify: "Nginx Reloader"
